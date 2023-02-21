@@ -1,4 +1,11 @@
+import Navigation from "./components/Navigation";
+
 const Battle = () => {
-  return <div> Battle Page</div>;
+  return (
+    <>
+      <Navigation />
+      <div> Battle Page</div>
+    </>
+  );
 };
 export default Battle;
