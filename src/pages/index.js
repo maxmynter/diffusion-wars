@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Enter from "./components/Enter";
-import UploadImage from "./components/uploadImage";
-import Battle from "./Battle";
+import Battle from "./components/battle";
 import Navigation from "./components/Navigation";
 
 export default function Home() {
@@ -16,9 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navigation />
-      <Enter />
-      <UploadImage />
+      <Battle />
     </>
   );
 }
