@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
+import LinkText from "./Linktext";
 
-const DragNDropField = ({ setImage }) => {
-  const [dragging, setDragging] = useState(false);
-
+const DragNDropField = ({ setImage, dragging, setDragging }) => {
   const handleDragging = (event, setDraggingValue) => {
     event.preventDefault();
     setDragging(setDraggingValue);
@@ -24,56 +23,78 @@ const DragNDropField = ({ setImage }) => {
       onDragOver={(event) => handleDragging(event, true)}
       onDragLeave={(event) => handleDragging(event, false)}
       onDrop={handleDrop}
-      className={`m-12 flex h-80 w-80 items-center rounded-3xl border-4 border-dashed text-center  ${
-        dragging ? "border-sky-500" : "border-purple-500"
-      }`}
+      className={`m-2 flex flex-col items-center rounded-3xl  p-6 text-center 
+      `}
     >
-      <form
-        className="flex h-full w-full items-center justify-center text-center"
-        onSubmit={(e) => e.preventDefault()}
+      <div
+        className={`m-12 flex h-80 w-80 items-center rounded-3xl border-4 border-dashed p-6 text-center  ${
+          dragging ? "border-sky-500 " : "border-white "
+        }`}
       >
-        <div>
-          <div className="w-full">
-            <p>Drag your image here or</p>
+        <form
+          className="flex h-full w-full items-center justify-center text-center"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div>
+            <div className="w-full">
+              <p>Drag your image here or</p>
+            </div>
           </div>
-          <div className="m-auto ">
-            Upload here :
-            <input
-              className="m-auto items-center text-center"
-              type="file"
-              name="submission"
-              onChange={(event) => {
-                setImage(event.target.files[0]);
-              }}
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div className="m-auto ">
+        {"Select File: "}
+        <input
+          className="m-auto items-center text-center"
+          type="file"
+          name="submission"
+          onChange={(event) => {
+            setImage(event.target.files[0]);
+          }}
+        />
+      </div>
     </div>
   );
 };
 
 const UploadImage = () => {
   const [image, setImage] = useState(null);
+  const [dragging, setDragging] = useState(false);
   return (
-    <div className="flex h-full w-full justify-center p-12">
-      {image && (
-        <div>
-          <div className="overflow-hidden rounded-3xl border-4 border-purple-500">
-            <Image
-              src={URL.createObjectURL(image)}
-              alt="Uploadedd Submission"
-              width={500}
-              height={500}
-            />
+    <div className="flex h-full w-full justify-center p-12 ">
+      <div
+        className={`rounded-3xl ${dragging ? "bg-sky-600" : "bg-sky-900"}  ${
+          dragging ? "shadow-overarch-xl" : "shadow-overarch-md"
+        } shadow-white`}
+      >
+        {image && (
+          <div className="m-2 flex flex-col items-center rounded-3xl p-6 text-center ">
+            <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl border-4 border-white">
+              <Image
+                src={URL.createObjectURL(image)}
+                alt="Uploadedd Submission"
+                fill
+              />
+            </div>
+            <div className="flex w-full justify-between">
+              <button onClick={() => setImage(null)}>
+                <LinkText text="Cancel" />
+              </button>
+              <button>
+                {" "}
+                <LinkText text="Submit" />
+              </button>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <button onClick={() => setImage(null)}>Cancel</button>
-            <button>Submit</button>
-          </div>
-        </div>
-      )}
-      {!image && <DragNDropField setImage={setImage} />}
+        )}
+        {!image && (
+          <DragNDropField
+            setImage={setImage}
+            dragging={dragging}
+            setDragging={setDragging}
+          />
+        )}
+      </div>
     </div>
   );
 };
