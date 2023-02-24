@@ -5,10 +5,15 @@ const typeDefs = gql`
     id: ID
     creator: String
     image: String
+    ok: Boolean
   }
 
   type Query {
     getImage: String
+  }
+
+  type Mutation {
+    addImage(imageString: String!): Image
   }
 `;
 

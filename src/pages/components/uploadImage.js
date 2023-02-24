@@ -1,6 +1,23 @@
 import { useState } from "react";
 import Image from "next/image";
 import LinkText from "./Linktext";
+import { gql, useMutation } from "@apollo/client";
+
+const ADD_IMAGE = gql`
+  mutation uploadImage($imageString: String!) {
+    addImage(imageString: $imageString) {
+      ok
+    }
+  }
+`;
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const DragNDropField = ({ setImage, dragging, setDragging }) => {
   const handleDragging = (event, setDraggingValue) => {
@@ -8,7 +25,7 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
     setDragging(setDraggingValue);
   };
 
-  const handleDrop = (event) => {
+  const handleDrop = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setDragging(false);
@@ -60,6 +77,19 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
 const UploadImage = () => {
   const [image, setImage] = useState(null);
   const [dragging, setDragging] = useState(false);
+  const [addImage] = useMutation(ADD_IMAGE);
+
+  const handleSubmit = async () => {
+    if (image) {
+      const base64Image = await getBase64(image);
+      const returnValue = await addImage({
+        variables: { imageString: base64Image },
+      });
+      setImage(null);
+      window.alert("Submitted");
+    }
+  };
+
   return (
     <div className="flex h-full w-full justify-center p-12 ">
       <div
@@ -80,8 +110,7 @@ const UploadImage = () => {
               <button onClick={() => setImage(null)}>
                 <LinkText text="Cancel" />
               </button>
-              <button>
-                {" "}
+              <button onClick={handleSubmit}>
                 <LinkText text="Submit" />
               </button>
             </div>
