@@ -4,12 +4,12 @@ const typeDefs = gql`
   type Image {
     id: ID
     creator: String
-    image: String
+    base64ImageString: String
     ok: Boolean
   }
 
   type Query {
-    getImage: String
+    getAllImages: [Image]
   }
 
   type Mutation {

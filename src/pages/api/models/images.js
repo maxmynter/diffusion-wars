@@ -2,8 +2,16 @@ const mongoose = require("mongoose");
 
 const image = new mongoose.Schema({
   creator: { type: String, required: false },
-  image: { type: String, required: true },
+  base64ImageString: { type: String, required: true },
   ok: { type: Boolean, required: true },
 });
 
-module.exports = mongoose.model("Image", image);
+image.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+module.exports = mongoose.models.Image || mongoose.model("Image", image);
