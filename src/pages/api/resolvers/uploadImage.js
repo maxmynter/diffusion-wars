@@ -4,7 +4,7 @@ const resolvers = {
   Query: {
     getAllImages: async () => {
       const allImages = await Image.find({});
-      return JSON.stringify(allImages);
+      return allImages.map((image) => image.toJSON());
     },
   },
   Mutation: {
