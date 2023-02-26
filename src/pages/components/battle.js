@@ -3,39 +3,53 @@ import { gql } from "apollo-server-core";
 import Image from "next/image";
 import Navigation from "./Navigation";
 
-const GET_ALL_IMAGES = gql`
+const GET_TWO_DIFFERENT_RANDOM_IMAGES = gql`
   query {
-    getAllImages {
+    getTwoDifferentRandomImages {
       creator
       base64ImageString
     }
   }
 `;
-
-const ImageTile = ({ imageString }) => {
+const SingleImageInStandoff = ({ src }) => {
   return (
-    <Image
-      src={imageString}
-      width={500}
-      height={500}
-      alt="Stable Diffusion Picture"
-    />
+    <div className="transform p-3 transition duration-500 hover:scale-105">
+      <div className="overflow-hidden rounded-3xl">
+        <Image
+          src={src}
+          width={500}
+          height={500}
+          alt="Stable Diffusion Picture"
+        />
+      </div>
+    </div>
+  );
+};
+
+const ImageTile = ({ twoImages }) => {
+  return (
+    <div className="m-auto flex items-center justify-center ">
+      <div className="rounded-3xl bg-sky-900 p-5 shadow-overarch-md">
+        <SingleImageInStandoff src={twoImages[0].base64ImageString} />
+        <SingleImageInStandoff src={twoImages[1].base64ImageString} />
+      </div>
+    </div>
   );
 };
 
 const ImagesContainer = () => {
-  const allImages = useQuery(GET_ALL_IMAGES);
+  const twoImages = useQuery(GET_TWO_DIFFERENT_RANDOM_IMAGES);
 
-  if (allImages.loading) {
+  if (twoImages.loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      {console.log("allImages", allImages)}
-      {allImages.data.getAllImages.map((img, index) => (
-        <ImageTile key={index} imageString={img.base64ImageString} />
-      ))}
+      <h2>Click on the Winner</h2>
+      {twoImages && (
+        <ImageTile twoImages={twoImages.data.getTwoDifferentRandomImages} />
+      )}
     </div>
   );
 };

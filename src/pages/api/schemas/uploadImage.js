@@ -10,6 +10,7 @@ const typeDefs = gql`
 
   type Query {
     getAllImages: [Image]
+    getTwoDifferentRandomImages: [Image]
   }
 
   type Mutation {
