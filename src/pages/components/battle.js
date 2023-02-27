@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "apollo-server-core";
 import Image from "next/image";
+import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
 import Navigation from "./Navigation";
 
 const GET_TWO_DIFFERENT_RANDOM_IMAGES = gql`
@@ -29,10 +30,10 @@ const SingleImageInStandoff = ({ src }) => {
 const ImageTile = ({ twoImages }) => {
   return (
     <div className="m-auto flex items-center justify-center ">
-      <div className="rounded-3xl bg-sky-900 p-5 shadow-overarch-md">
+      <BlurredBackgroundContainer>
         <SingleImageInStandoff src={twoImages[0].base64ImageString} />
         <SingleImageInStandoff src={twoImages[1].base64ImageString} />
-      </div>
+      </BlurredBackgroundContainer>
     </div>
   );
 };

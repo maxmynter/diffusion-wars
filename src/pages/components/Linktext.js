@@ -1,8 +1,8 @@
 const LinkText = ({ text }) => {
   return (
-    <h3 className="hover:text-shadow-lg transform p-2 font-bold shadow-white transition hover:scale-125">
-      {text}
-    </h3>
+    <div className="transform rounded-3xl bg-gray-400 p-2 transition hover:scale-125">
+      <h3 className="  p-2 font-bold shadow-white  ">{text}</h3>
+    </div>
   );
 };
 

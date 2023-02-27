@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import LinkText from "./Linktext";
 import { gql, useMutation } from "@apollo/client";
+import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
 
 const ADD_IMAGE = gql`
   mutation uploadImage($imageString: String!) {
@@ -40,13 +41,11 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
       onDragOver={(event) => handleDragging(event, true)}
       onDragLeave={(event) => handleDragging(event, false)}
       onDrop={handleDrop}
-      className={`m-2 flex flex-col items-center rounded-3xl  p-6 text-center 
+      className={`m-2 flex flex-col items-center rounded-3xl p-12  text-center 
       `}
     >
       <div
-        className={`m-12 flex h-80 w-80 items-center rounded-3xl border-4 border-dashed p-6 text-center  ${
-          dragging ? "border-sky-500 " : "border-white "
-        }`}
+        className={`flex  h-80 w-80 items-center rounded-3xl border-2 border-dashed border-white p-6 text-center transition `}
       >
         <form
           className="flex h-full w-full items-center justify-center text-center"
@@ -54,22 +53,26 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
         >
           <div>
             <div className="w-full">
-              <p>Drag your image here or</p>
+              <label
+                for="file-upload"
+                className="m-auto cursor-pointer items-center rounded-xl text-center"
+              >
+                {!dragging && "Drag image here or click here to browse files"}
+              </label>
             </div>
           </div>
+          <input
+            className="hidden"
+            type="file"
+            id="file-upload"
+            name="submission"
+            onChange={(event) => {
+              setImage(event.target.files[0]);
+            }}
+          />
         </form>
       </div>
-      <div className="m-auto ">
-        {"Select File: "}
-        <input
-          className="m-auto items-center text-center"
-          type="file"
-          name="submission"
-          onChange={(event) => {
-            setImage(event.target.files[0]);
-          }}
-        />
-      </div>
+      <div className="m-auto "></div>
     </div>
   );
 };
@@ -92,14 +95,10 @@ const UploadImage = () => {
 
   return (
     <div className="flex h-full w-full justify-center p-12 ">
-      <div
-        className={`rounded-3xl ${dragging ? "bg-sky-600" : "bg-sky-900"}  ${
-          dragging ? "shadow-overarch-xl" : "shadow-overarch-md"
-        } shadow-white`}
-      >
+      <BlurredBackgroundContainer>
         {image && (
           <div className="m-2 flex flex-col items-center rounded-3xl p-6 text-center ">
-            <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl border-4 border-white">
+            <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl ">
               <Image
                 src={URL.createObjectURL(image)}
                 alt="Uploadedd Submission"
@@ -123,7 +122,7 @@ const UploadImage = () => {
             setDragging={setDragging}
           />
         )}
-      </div>
+      </BlurredBackgroundContainer>
     </div>
   );
 };

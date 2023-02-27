@@ -3,16 +3,16 @@ import LinkText from "./Linktext";
 
 const Navigation = () => {
   return (
-    <div className="flex w-full flex-col items-center justify-center">
-      <h1 className="w-screen p-10 text-center text-5xl">
-        {"Diffusion Royale"}
+    <div className="flex w-screen min-w-fit backdrop-blur-xl">
+      <h1 className="font-display  m-auto w-1/2 p-3 text-left align-middle text-3xl">
+        Diffusion Royale
       </h1>
-      <div className=" flex w-96 flex-row justify-between p-5 text-center">
+      <div className=" w1/2  flex w-96  flex-row justify-between p-5 text-center">
         <Link href="/submitEntry">
           <LinkText text="Enter" />
         </Link>
         <Link href="/">
-          <LinkText text="Battle" />
+          <LinkText text="Standoff" />
         </Link>
         <Link href="/leaderboard">
           <LinkText text="Leaderboard" />
