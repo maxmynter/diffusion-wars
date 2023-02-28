@@ -20,6 +20,40 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
+const DisplayUploadedImage = ({ image, setImage }) => {
+  const [addImage] = useMutation(ADD_IMAGE);
+  const handleSubmit = async () => {
+    if (image) {
+      const base64Image = await getBase64(image);
+      const returnValue = await addImage({
+        variables: { imageString: base64Image },
+      });
+      setImage(null);
+      window.alert("Submitted");
+    }
+  };
+
+  return (
+    <div className="m-2 flex flex-col items-center rounded-3xl p-6 text-center ">
+      <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl ">
+        <Image
+          src={URL.createObjectURL(image)}
+          alt="Uploaded Submission"
+          fill
+        />
+      </div>
+      <div className="flex w-full justify-between">
+        <button onClick={() => setImage(null)}>
+          <LinkText text="Cancel" />
+        </button>
+        <button onClick={handleSubmit}>
+          <LinkText text="Submit" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const DragNDropField = ({ setImage, dragging, setDragging }) => {
   const handleDragging = (event, setDraggingValue) => {
     event.preventDefault();
@@ -45,22 +79,18 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
       `}
     >
       <div
-        className={`flex  h-80 w-80 items-center rounded-3xl border-2 border-dashed border-white p-6 text-center transition `}
+        className={`flex h-80 w-80 items-center rounded-3xl border-2 border-dashed border-white p-6 text-center transition `}
       >
         <form
           className="flex h-full w-full items-center justify-center text-center"
           onSubmit={(e) => e.preventDefault()}
         >
-          <div>
-            <div className="w-full">
-              <label
-                for="file-upload"
-                className="m-auto cursor-pointer items-center rounded-xl text-center"
-              >
-                {!dragging && "Drag image here or click here to browse files"}
-              </label>
-            </div>
-          </div>
+          <label
+            for="file-upload"
+            className="m-auto cursor-pointer items-center rounded-xl text-center"
+          >
+            {!dragging && "Drag image here or click here to browse files"}
+          </label>
           <input
             className="hidden"
             type="file"
@@ -72,7 +102,6 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
           />
         </form>
       </div>
-      <div className="m-auto "></div>
     </div>
   );
 };
@@ -80,41 +109,11 @@ const DragNDropField = ({ setImage, dragging, setDragging }) => {
 const UploadImage = () => {
   const [image, setImage] = useState(null);
   const [dragging, setDragging] = useState(false);
-  const [addImage] = useMutation(ADD_IMAGE);
-
-  const handleSubmit = async () => {
-    if (image) {
-      const base64Image = await getBase64(image);
-      const returnValue = await addImage({
-        variables: { imageString: base64Image },
-      });
-      setImage(null);
-      window.alert("Submitted");
-    }
-  };
 
   return (
     <div className="flex h-full w-full justify-center p-12 ">
       <BlurredBackgroundContainer>
-        {image && (
-          <div className="m-2 flex flex-col items-center rounded-3xl p-6 text-center ">
-            <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl ">
-              <Image
-                src={URL.createObjectURL(image)}
-                alt="Uploadedd Submission"
-                fill
-              />
-            </div>
-            <div className="flex w-full justify-between">
-              <button onClick={() => setImage(null)}>
-                <LinkText text="Cancel" />
-              </button>
-              <button onClick={handleSubmit}>
-                <LinkText text="Submit" />
-              </button>
-            </div>
-          </div>
-        )}
+        {image && <DisplayUploadedImage image={image} setImage={setImage} />}
         {!image && (
           <DragNDropField
             setImage={setImage}

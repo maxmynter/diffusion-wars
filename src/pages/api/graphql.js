@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-micro";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
-import typeDefs from "./schemas/uploadImage";
-import resolvers from "./resolvers/uploadImage";
+import typeDefs from "./schemas/schemas";
+import resolvers from "./resolvers/resolvers";
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);

@@ -6,6 +6,7 @@ export default function Document() {
       <Head />
       <body className="no-scrollbar  isolate bg-black bg-cover font-sans text-white ">
         <div className="w-full items-center justify-center">
+          {/*The following children are the blurred page backgrounds */}
           <div className="relative h-full w-full overflow-clip">
             <div className="absolute left-1/4 top-1/2 -mt-[250px]  -ml-[250px] h-[535px] w-[535px] animate-antiblob rounded-full bg-vio opacity-70 mix-blend-multiply blur-xl filter"></div>
             <div className="animation-delay-6000 absolute top-12 right-4 h-[250px] w-[250px] animate-blob rounded-full bg-yello opacity-70 mix-blend-multiply blur-xl filter"></div>
