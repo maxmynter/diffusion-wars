@@ -14,7 +14,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addImage(imageString: String!): Image
+    addImage(imageString: String!, artist: String): Image
   }
 `;
 

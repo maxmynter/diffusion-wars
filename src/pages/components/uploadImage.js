@@ -5,8 +5,8 @@ import { gql, useMutation } from "@apollo/client";
 import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
 
 const ADD_IMAGE = gql`
-  mutation uploadImage($imageString: String!) {
-    addImage(imageString: $imageString) {
+  mutation uploadImage($imageString: String!, $artist: String) {
+    addImage(imageString: $imageString, artist: $artist) {
       ok
     }
   }
@@ -21,12 +21,17 @@ const getBase64 = (file) =>
   });
 
 const DisplayUploadedImage = ({ image, setImage }) => {
+  const [username, setUsername] = useState(null);
   const [addImage] = useMutation(ADD_IMAGE);
+
   const handleSubmit = async () => {
     if (image) {
       const base64Image = await getBase64(image);
       const returnValue = await addImage({
-        variables: { imageString: base64Image },
+        variables: {
+          imageString: base64Image,
+          artist: username ? username : "Anonymos",
+        },
       });
       setImage(null);
       window.alert("Submitted");
@@ -34,7 +39,7 @@ const DisplayUploadedImage = ({ image, setImage }) => {
   };
 
   return (
-    <div className="m-2 flex flex-col items-center rounded-3xl p-6 text-center ">
+    <div className="m-2 flex flex-col items-center space-y-4 rounded-3xl p-6 text-center">
       <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl ">
         <Image
           src={URL.createObjectURL(image)}
@@ -42,6 +47,15 @@ const DisplayUploadedImage = ({ image, setImage }) => {
           fill
         />
       </div>
+      <label className="rounded-2xl p-2 backdrop-blur-3xl">
+        Artist:{" "}
+        <input
+          className="rounded-2xl border-2 border-white bg-transparent p-2 !outline-none"
+          type="text"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
+      </label>
       <div className="flex w-full justify-between">
         <button onClick={() => setImage(null)}>
           <LinkText text="Cancel" />

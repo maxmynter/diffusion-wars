@@ -28,6 +28,7 @@ const resolvers = {
       if (args) {
         const image = new Image({
           base64ImageString: args.imageString,
+          artist: args.artist,
           ok: true,
         });
         return image.save();
