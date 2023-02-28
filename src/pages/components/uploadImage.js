@@ -41,11 +41,7 @@ const DisplayUploadedImage = ({ image, setImage }) => {
   return (
     <div className="m-2 flex flex-col items-center space-y-4 rounded-3xl p-6 text-center">
       <div className="relative m-12 flex h-80 w-80 items-center overflow-hidden rounded-3xl ">
-        <Image
-          src={URL.createObjectURL(image)}
-          alt="Uploaded Submission"
-          fill
-        />
+        <Image src={image} alt="Uploaded Submission" fill />
       </div>
       <label className="rounded-2xl p-2 backdrop-blur-3xl">
         Artist:{" "}
