@@ -22,6 +22,10 @@ const resolvers = {
       const randomImage2 = allImages[randomNumber2];
       return [randomImage1, randomImage2];
     },
+    getImage: async (root, args) => {
+      const image = await Image.findById(args.imageId);
+      return image;
+    },
   },
   Mutation: {
     addImage: (root, args) => {
@@ -29,11 +33,50 @@ const resolvers = {
         const image = new Image({
           base64ImageString: args.imageString,
           creator: args.artist,
+          battleResults: [],
           ok: true,
         });
         return image.save();
       }
       return { ok: false };
+    },
+    battleWon: (root, args) => {
+      return new Promise((resolve, reject) => {
+        Image.findOneAndUpdate(
+          { _id: args.imageId },
+          { $inc: { battlesWon: 1 } },
+          { upsert: true, new: true }
+        ).exec((err, res) => {
+          console.log("test", res);
+          if (err) {
+            reject(false);
+          } else {
+            resolve({
+              battlesWon: res.battlesWon,
+              battlesLost: res.battlesLost,
+            });
+          }
+        });
+      });
+    },
+    battleLost: (root, args) => {
+      return new Promise((resolve, reject) => {
+        Image.findOneAndUpdate(
+          { _id: args.imageId },
+          { $inc: { battlesLost: 1 } },
+          { upsert: true, new: true }
+        ).exec((err, res) => {
+          console.log("test", err, res);
+          if (err) {
+            reject(false);
+          } else {
+            resolve({
+              battlesWon: res.battlesWon,
+              battlesLost: res.battlesLost,
+            });
+          }
+        });
+      });
     },
   },
 };

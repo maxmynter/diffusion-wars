@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const image = new mongoose.Schema({
   creator: { type: String, required: false },
   base64ImageString: { type: String, required: true },
+  battlesWon: { type: Number },
+  battlesLost: { type: Number },
   ok: { type: Boolean, required: true },
 });
 
