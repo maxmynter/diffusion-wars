@@ -46,6 +46,8 @@ module.exports = {
           700: "#8A8A8A",
           900: "#E5E8E8",
         },
+        transparentBlack: "rgba(0, 0, 0, 0.4)",
+        transparentWhite: "rgba(255, 255, 255, 0.4)",
       },
     },
   },

@@ -18,8 +18,8 @@ const typeDefs = gql`
 
   type Mutation {
     addImage(imageString: String!, artist: String): Image
-    battleWon(imageId: String): Image
-    battleLost(imageId: String): Image
+    battleWon(imageId: String!): Image
+    battleLost(imageId: String!): Image
   }
 `;
 
