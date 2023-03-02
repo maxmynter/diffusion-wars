@@ -48,7 +48,8 @@ const ImagesContainer = () => {
   return (
     <div>
       <h2>Click on the Winner</h2>
-      {twoImages && (
+      {console.log(twoImages)}
+      {twoImages.data && (
         <ImageTile twoImages={twoImages.data.getTwoDifferentRandomImages} />
       )}
     </div>

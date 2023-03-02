@@ -33,7 +33,8 @@ const resolvers = {
         const image = new Image({
           base64ImageString: args.imageString,
           creator: args.artist,
-          battleResults: [],
+          battlesWon: 0,
+          battlesLost: 0,
           ok: true,
         });
         return image.save();
