@@ -127,14 +127,12 @@ const ImageTile = ({ twoImages, refetch }) => {
       });
 
       setTimeout(async () => {
-        console.log("refetch");
         await refetch();
         await setWinFlagOfWinner(false);
         await setWinFlagOfLooser(false);
         await setLooseFlagOfWinner(false);
         await setLooseFlagOfLooser(false);
         await setUserVoted(false);
-        console.log("Refetch Complete");
       }, 1500);
     }
   };
