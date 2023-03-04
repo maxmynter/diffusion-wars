@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "apollo-server-core";
 import Image from "next/image";
-import { getWinRatio } from "./utils/getWinAndLooseRatio";
-import BlurredBackgroundContainer from "./components/BlurredBackgroundContainer";
-import Navigation from "./components/Navigation";
-import Loading from "./components/Loading";
+import { getWinRatio } from "../utils/getWinAndLooseRatio";
+import BlurredBackgroundContainer from "../components/BlurredBackgroundContainer";
+import Navigation from "../components/Navigation";
+import Loading from "../components/Loading";
 
 const GET_ALL_IMAGES = gql`
   query {

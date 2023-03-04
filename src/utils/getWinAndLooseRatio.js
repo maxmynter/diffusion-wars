@@ -6,14 +6,14 @@ const getWinsLossesBattles = (imageObject) => {
 };
 
 export const getWinRatio = (imageObject) => {
-  const { nWins, totalBattlesOfImage, ...rest } =
+  const { nWins, nLosses, totalBattlesOfImage } =
     getWinsLossesBattles(imageObject);
   const winRatio = Math.round((100 * nWins) / totalBattlesOfImage);
   return winRatio;
 };
 
 export const getLooseRatio = (imageObject) => {
-  const { nLosses, totalBattlesOfImage, ...rest } =
+  const { nWins, nLosses, totalBattlesOfImage } =
     getWinsLossesBattles(imageObject);
   const looseRatio = Math.round((100 * nLosses) / totalBattlesOfImage);
   return looseRatio;

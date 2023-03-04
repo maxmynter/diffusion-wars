@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { getWinRatio, getLooseRatio } from "../utils/getWinAndLooseRatio";
 import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
-import Navigation from "./Navigation";
 import Loading from "./Loading";
 
 const GET_TWO_DIFFERENT_RANDOM_IMAGES = gql`
@@ -50,10 +49,12 @@ const SingleImageInStandoff = ({
           ...imageObject,
           battlesWon: imageObject.battlesWon + 1,
         })
-      : getLooseRatio({
+      : userVoted && tileHasLost
+      ? getWinRatio({
           ...imageObject,
           battlesLost: imageObject.battlesLost + 1,
-        });
+        })
+      : null;
   };
 
   return (
@@ -179,7 +180,7 @@ const ImagesContainer = () => {
 
   return (
     <div>
-      <h2>Click on the Winner</h2>
+      <h2>Select the Winner</h2>
       {twoImages.loading && <Loading />}
       {!twoImages.loading && twoImages.data && (
         <ImageTile
@@ -193,11 +194,10 @@ const ImagesContainer = () => {
 
 const Battle = () => {
   return (
-    <>
-      <Navigation />
-      <div> Battle Page</div>
+    <div className="items-center text-center">
+      <h1 className="p-5 text-3xl"> Standoff </h1>
       <ImagesContainer />
-    </>
+    </div>
   );
 };
 export default Battle;
