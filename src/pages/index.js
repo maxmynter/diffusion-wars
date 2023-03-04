@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Battle from "../components/battle";
-import Navigation from "../components/Navigation";
+import Battle from "./components/Battle";
+import Navigation from "./components/Navigation";
 
 export default function Home() {
   return (

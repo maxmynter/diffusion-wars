@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "apollo-server-core";
 import Image from "next/image";
 import { useState } from "react";
-import { getWinRatio, getLooseRatio } from "../utils/getWinAndLooseRatio";
+import { getWinRatio, getLooseRatio } from "../../utils/getWinAndLooseRatio";
 import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
 import Loading from "./Loading";
 
@@ -194,8 +194,8 @@ const ImagesContainer = () => {
 
 const Battle = () => {
   return (
-    <div className="items-center text-center">
-      <h1 className="p-5 text-3xl"> Standoff </h1>
+    <div className="content-center items-center text-center">
+      <h1 className="pt-12 pb-3 text-3xl font-bold"> Standoff </h1>
       <ImagesContainer />
     </div>
   );

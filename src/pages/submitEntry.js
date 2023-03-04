@@ -1,6 +1,6 @@
-import Enter from "../components/Enter";
-import Navigation from "../components/Navigation";
-import UploadImage from "../components/uploadImage";
+import Enter from "./components/Enter";
+import Navigation from "./components/Navigation";
+import UploadImage from "./components/uploadImage";
 
 const SubmitEntry = () => {
   return (
