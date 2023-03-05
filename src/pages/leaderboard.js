@@ -22,41 +22,47 @@ const Leaderboard = () => {
 
   if (allImagesQueryRetrurn.loading) {
     return (
-      <>
+      <div className="flex h-screen w-screen flex-col items-center">
         <Navigation />
-        <Loading />
-      </>
+        <div className="w-1/2">
+          <BlurredBackgroundContainer>
+            <Loading />
+          </BlurredBackgroundContainer>
+        </div>
+      </div>
     );
   }
 
   const allImages = allImagesQueryRetrurn.data.getAllImages;
 
   return (
-    <div className="flex h-screen flex-col">
-      <Navigation />
-      <div className=" flex  w-full flex-grow flex-col items-center overflow-scroll p-12">
-        {[...allImages]
-          .sort((a, b) => getWinRatio(b) - getWinRatio(a))
-          .map((img, idx) => {
-            return (
-              <BlurredBackgroundContainer key={idx}>
-                <div className="overflow-hidden rounded-3xl">
-                  <Image
-                    src={img.base64ImageString}
-                    alt={`Submission ${idx}`}
-                    height={512}
-                    width={512}
-                  />
-                </div>
-                <div className="items-left flex w-full flex-col p-2 align-middle">
-                  <p>-- {img.creator}</p> <p>{getWinRatio(img)} % win rate</p>
-                  <p>{img.battlesWon + img.battlesLost} standoffs</p>
-                </div>
-              </BlurredBackgroundContainer>
-            );
-          })}
+    <>
+      <div className="flex h-screen w-screen flex-col">
+        <Navigation />
+        <div className=" flex  w-full flex-grow flex-col items-center overflow-scroll p-12">
+          {[...allImages]
+            .sort((a, b) => getWinRatio(b) - getWinRatio(a))
+            .map((img, idx) => {
+              return (
+                <BlurredBackgroundContainer key={idx}>
+                  <div className="overflow-hidden rounded-3xl">
+                    <Image
+                      src={img.base64ImageString}
+                      alt={`Submission ${idx}`}
+                      height={512}
+                      width={512}
+                    />
+                  </div>
+                  <div className="items-left flex w-full flex-col p-2 align-middle">
+                    <p>-- {img.creator}</p> <p>{getWinRatio(img)} % win rate</p>
+                    <p>{img.battlesWon + img.battlesLost} standoffs</p>
+                  </div>
+                </BlurredBackgroundContainer>
+              );
+            })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

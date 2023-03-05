@@ -78,7 +78,7 @@ const SingleImageInStandoff = ({
                 userVoted && tileHasWon ? "bg-transparentWhite" : ""
               } ${userVoted && tileHasLost ? "bg-transparentBlack" : ""}`}
             >
-              <h1 className="p-7 text-9xl font-bold">
+              <h1 className="m-auto p-7 text-9xl font-bold">
                 {userVoted && tileHasWon ? `Winner` : " Looser"}
               </h1>
               <div className="p-11">
@@ -138,37 +138,25 @@ const ImageTile = ({ twoImages, refetch }) => {
     }
   };
   return (
-    <div className="m-auto flex items-center justify-center ">
-      <BlurredBackgroundContainer>
-        <SingleImageInStandoff
-          imageObject={twoImages[0]}
-          handleThisTileWins={() =>
-            handleClickWinner(
-              setOneWins,
-              setTwoWins,
-              setOneLooses,
-              setTwoLooses
-            )
-          }
-          tileHasWon={oneWins}
-          tileHasLost={oneLooses}
-          userVoted={userVoted}
-        />
-        <SingleImageInStandoff
-          imageObject={twoImages[1]}
-          handleThisTileWins={() =>
-            handleClickWinner(
-              setTwoWins,
-              setOneWins,
-              setTwoLooses,
-              setOneLooses
-            )
-          }
-          tileHasWon={twoWins}
-          tileHasLost={twoLooses}
-          userVoted={userVoted}
-        />
-      </BlurredBackgroundContainer>
+    <div className="items-top m-5 flex justify-center ">
+      <SingleImageInStandoff
+        imageObject={twoImages[0]}
+        handleThisTileWins={() =>
+          handleClickWinner(setOneWins, setTwoWins, setOneLooses, setTwoLooses)
+        }
+        tileHasWon={oneWins}
+        tileHasLost={oneLooses}
+        userVoted={userVoted}
+      />
+      <SingleImageInStandoff
+        imageObject={twoImages[1]}
+        handleThisTileWins={() =>
+          handleClickWinner(setTwoWins, setOneWins, setTwoLooses, setOneLooses)
+        }
+        tileHasWon={twoWins}
+        tileHasLost={twoLooses}
+        userVoted={userVoted}
+      />
     </div>
   );
 };
@@ -180,7 +168,7 @@ const ImagesContainer = () => {
 
   return (
     <div>
-      <h2>Select the Winner</h2>
+      <h2>Click the Winner</h2>
       {twoImages.loading && <Loading />}
       {!twoImages.loading && twoImages.data && (
         <ImageTile
@@ -195,7 +183,11 @@ const ImagesContainer = () => {
 const Battle = () => {
   return (
     <div className="content-center items-center text-center">
-      <h1 className="pt-12 pb-3 text-3xl font-bold"> Standoff </h1>
+      <div className="flex w-full justify-center ">
+        <div className="content-center text-center align-middle">
+          <h1 className="pt-12 pb-3 text-3xl font-bold">Standoff</h1>
+        </div>
+      </div>
       <ImagesContainer />
     </div>
   );

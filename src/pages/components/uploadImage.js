@@ -143,18 +143,16 @@ const UploadImage = () => {
   const [dragging, setDragging] = useState(false);
 
   return (
-    <div className="flex h-full w-full justify-center p-12 ">
-      <BlurredBackgroundContainer>
-        {image && <DisplayUploadedImage image={image} setImage={setImage} />}
-        {!image && (
-          <DragNDropField
-            image={image}
-            setImage={setImage}
-            dragging={dragging}
-            setDragging={setDragging}
-          />
-        )}
-      </BlurredBackgroundContainer>
+    <div className="flex h-full w-full justify-center">
+      {image && <DisplayUploadedImage image={image} setImage={setImage} />}
+      {!image && (
+        <DragNDropField
+          image={image}
+          setImage={setImage}
+          dragging={dragging}
+          setDragging={setDragging}
+        />
+      )}
     </div>
   );
 };

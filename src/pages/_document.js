@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body className="no-scrollbar  isolate bg-black bg-cover font-sans text-white ">
+      <body className="no-scrollbar isolate bg-black bg-cover font-sans text-white ">
         <div className="w-full items-center justify-center">
           {/*The following children are the blurred page backgrounds */}
           <div className="relative h-full w-full overflow-clip">
