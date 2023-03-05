@@ -1,9 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import LinkText from "./Linktext";
 import { gql, useMutation } from "@apollo/client";
-import BlurredBackgroundContainer from "./BlurredBackgroundContainer";
 
 const ADD_IMAGE = gql`
   mutation uploadImage($imageString: String!, $artist: String) {
@@ -38,7 +36,8 @@ const DisplayUploadedImage = ({ image, setImage }) => {
       });
       setSubmitted(true);
       setTimeout(() => {
-        router.push("/");
+        setSubmitted(false);
+        setImage(null);
       }, 1000);
     }
   };
