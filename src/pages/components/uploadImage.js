@@ -23,7 +23,6 @@ const DisplayUploadedImage = ({ image, setImage }) => {
   const [username, setUsername] = useState(undefined);
   const [addImage] = useMutation(ADD_IMAGE);
   const [submitted, setSubmitted] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async () => {
     if (image) {
