@@ -1,5 +1,6 @@
 import { ApolloServer } from "apollo-server-micro";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import micro_cors from "micro-cors";
 import typeDefs from "./schemas/schemas";
 import resolvers from "./resolvers/resolvers";
 
@@ -27,6 +28,17 @@ const server = new ApolloServer({
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 
+const cors = micro_cors({
+  origin: "*",
+  allowCredentials: true,
+  allowMethods: ["GET", "POST", "PUT", "DELETE"],
+  allowHeaders: [
+    "access-control-allow-credentials",
+    "access-control-allow-origin",
+    "content-type",
+  ],
+});
+
 export const config = {
   api: {
     bodyParser: false,
@@ -35,7 +47,7 @@ export const config = {
 
 const startServer = server.start();
 
-export default async function handler(req, res) {
+export default cors(async function handler(req, res) {
   await startServer;
   await server.createHandler({
     path: "/api/graphql",
@@ -44,4 +56,4 @@ export default async function handler(req, res) {
       credentials: true,
     },
   })(req, res);
-}
+});
