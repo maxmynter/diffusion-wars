@@ -21,7 +21,16 @@ mongoose
   });
 mongoose.set("debug", true);
 
-const cors = Cors();
+const cors = Cors({
+  origin: "http://localhost:3000/api/graphql",
+  allowCredentials: true,
+  allowMethods: ["GET", "POST", "PUT", "DELETE"],
+  allowHeaders: [
+    "access-control-allow-credentials",
+    "access-control-allow-origin",
+    "content-type",
+  ],
+});
 
 const server = new ApolloServer({
   typeDefs,
