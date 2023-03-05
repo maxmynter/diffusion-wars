@@ -1,5 +1,6 @@
 import { ApolloServer } from "apollo-server-micro";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import Cors from "micro-cors";
 import typeDefs from "./schemas/schemas";
 import resolvers from "./resolvers/resolvers";
 
@@ -20,13 +21,11 @@ mongoose
   });
 mongoose.set("debug", true);
 
+const cors = Cors();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  cors: {
-    origin: "*", // TODO Change to later URL
-    credentials: true,
-  },
   playground: true,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
@@ -39,7 +38,7 @@ export const config = {
 
 const startServer = server.start();
 
-export default async function handler(req, res) {
+export default cors(async function handler(req, res) {
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
-}
+});
